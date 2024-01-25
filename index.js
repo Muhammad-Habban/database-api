@@ -8,6 +8,7 @@ const {logger} = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const authRoutes = require("./routes/authRoute");
 const corsOptions = require("./config/corsOptions");
 app.use(logger);
 app.use(cors(corsOptions));
@@ -17,7 +18,8 @@ app.use(cookieParser());
 app.use("/", express.static(path.join(__dirname, "/public")));
 app.use("/", require("./routes/root"));
 
-
+// auth routes
+app.use("/auth", authRoutes);
 app.all("*", (req, res)=>{
     res.status(404);
     if(req.accepts("html"))
