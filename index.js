@@ -9,6 +9,7 @@ const errorHandler = require("./middleware/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoute");
+const collectionRoutes = require("./routes/collectionRoute");
 const corsOptions = require("./config/corsOptions");
 app.use(logger);
 app.use(cors(corsOptions));
@@ -20,6 +21,8 @@ app.use("/", require("./routes/root"));
 
 // auth routes
 app.use("/auth", authRoutes);
+//collection routes
+app.use("/collections", collectionRoutes);
 app.all("*", (req, res)=>{
     res.status(404);
     if(req.accepts("html"))

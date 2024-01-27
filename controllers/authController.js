@@ -5,12 +5,12 @@ const createNewUser = async(req, res) => {
     const {name, email, password} = req.body;
     if(!name || !email || !password)
     {
-        return res.status(401).json({message: "Please provide all information"});
+        return res.status(400).json({message: "Please provide all information"});
     }
     const dupUser = await User.findOne({email});
     if(dupUser)
     {
-        return res.status(401).json({message: "User with this email already exists"});
+        return res.status(400).json({message: "User with this email already exists"});
     }
     const salt = await bcrypt.genSalt(10);
     if(!salt)
@@ -30,17 +30,17 @@ const loginUser = async (req, res) => {
     const {email, password} = req.body;
     if(!email || !password)
     {
-        return res.status(401).json({message: "Please provide all information"});
+        return res.status(400).json({message: "Please provide all information"});
     }
     const userExist = await User.findOne({email});
     if(!userExist)
     {
-        return res.status(401).json({message: "No user with this email found"});
+        return res.status(400).json({message: "No user with this email found"});
     }
     const validPassword  = await bcrypt.compare(password, userExist.password);
     if(!validPassword)
     {
-        return res.status(401).json({message: "Incorrect Password"});
+        return res.status(400).json({message: "Incorrect Password"});
     }
     const userInfo = {
         userId: userExist._id,
@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
     const accessToken = await jwt.sign({userInfo}, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "1d"
     });
-    return res.status(200).json({message: "User logged in Successfully", userExist, accessToken});
+    return res.status(200).json({message: "User logged in Successfully", user: userExist, accessToken});
 }
 
 module.exports = {createNewUser, loginUser};

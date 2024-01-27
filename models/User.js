@@ -6,11 +6,11 @@ const UserSchema = new mongoose.Schema(
         name : {
             type: String,
             minLength: 3,
-            require: [true, "Please Provide User Name"]
+            required: [true, "Please Provide User Name"]
         },
         email : {
             type: String,
-            require: [true, "Please Provide an Email"],
+            required: [true, "Please Provide an Email"],
             validate : {
                 validator : validator.isEmail,
                 message : "Please Provide a valid Email",
@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
         },
         password : {
             type: String,
-            require: [true, "Please Provide a Password"]
+            required: [true, "Please Provide a Password"]
         }
     }
 );
