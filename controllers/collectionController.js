@@ -24,7 +24,7 @@ const createCollection = async(req, res)=> {
         category,
         user: userId
     });
-    return res.status(200).json({message: "Collection Created Successfully", newCollection});
+    return res.status(200).json({message: "Collection Created Successfully", collection: newCollection});
 }
 
 const deleteCollection = async(req, res) => {
@@ -34,7 +34,7 @@ const deleteCollection = async(req, res) => {
     {
         return res.status(400).json({message: "No Collection found with this id"});
     }
-    return res.status(200).json({message: "Collection deleted Successfully", collectionExist});
+    return res.status(200).json({message: "Collection deleted Successfully", collection: collectionExist});
 }
 
 const updateCollection = async(req, res) => {
@@ -71,7 +71,7 @@ const updateCollection = async(req, res) => {
     }
 
     await collectionExist.save();
-    res.status(200).json({message: "Collection Updated Successfully", collectionExist});
+    res.status(200).json({message: "Collection Updated Successfully", collection: collectionExist});
 }
 
 const getUserCollections = async(req, res) => {
@@ -85,7 +85,7 @@ const getUserCollections = async(req, res) => {
     {
         return res.status(400).json({message: "No collection of the given user found"});
     }
-    return res.status(200).json({message: "Collection found", userCollections, total: userCollections.length})
+    return res.status(200).json({message: "Collection found", collections: userCollections, total: userCollections.length})
 }
 
 module.exports = {createCollection, deleteCollection, updateCollection, getAllCollections, getUserCollections};

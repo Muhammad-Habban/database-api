@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getResearchPapers, createResearchPaper, deleteResearchPaper, updateResearchPaper} = require("../controllers/researchPaperController");
+const {getResearchPapers, createResearchPaper, deleteResearchPaper, updateResearchPaper, getCollectionResearchPaper} = require("../controllers/researchPaperController");
 const multer = require("multer");
 const fileStorageEngine = multer.diskStorage(
     {
@@ -15,6 +15,7 @@ const fileStorageEngine = multer.diskStorage(
 const upload = multer({storage: fileStorageEngine});
 router.get("/", getResearchPapers)
     .post("/", upload.single("pdf"), createResearchPaper)
+    .post("/collectionResearchPapers", getCollectionResearchPaper)
     .delete("/", deleteResearchPaper)
     .patch("/", updateResearchPaper);
 

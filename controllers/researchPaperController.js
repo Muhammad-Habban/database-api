@@ -94,4 +94,18 @@ const updateResearchPaper = async(req, res) => {
     return res.status(200).json({message: "Research Paper updated Successfully.", researchPaper: paper});
 }
 
-module.exports = {getResearchPapers, createResearchPaper, deleteResearchPaper, updateResearchPaper};
+const getCollectionResearchPaper = async(req, res) => {
+    const {collectionId} = req.body;
+    if(!collectionId)
+    {
+        return res.status(400).json({message: "No collection id found"});
+    }
+    const papers = await ResearchPaper.find({collectionId});
+    if(!papers || papers.length < 1)
+    {
+        return res.status(400).json({message: "No papers for the given collection found"});
+    }
+    return res.status(200).json({researchPapers: papers, total: papers.length});
+}
+
+module.exports = {getResearchPapers, createResearchPaper, deleteResearchPaper, updateResearchPaper, getCollectionResearchPaper};
