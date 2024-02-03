@@ -23,7 +23,7 @@ const createNewUser = async(req, res) => {
         return res.status(500).json({message: "Error while hashing password"});
     }
     const newUser = await User.create({name, email, password: hashedPassword});
-    return res.status(200).json({message: "User Created Successfully", status: 200, newUser});
+    return res.status(200).json({message: "User Created Successfully", status: 200, user: newUser});
 }
 
 const loginUser = async (req, res) => {

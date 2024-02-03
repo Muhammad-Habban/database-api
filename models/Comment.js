@@ -7,6 +7,10 @@ const commentSchema = new mongoose.Schema(
         },
         timeStamp:{
             type: String
+        },
+        researchPaperId:{
+            type: mongoose.Types.ObjectId,
+            ref: "ResearchPaper"
         }
     }
 )

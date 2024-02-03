@@ -98,7 +98,12 @@ const getCollectionResearchPaper = async(req, res) => {
     const {collectionId} = req.body;
     if(!collectionId)
     {
-        return res.status(400).json({message: "No collection id found"});
+        return res.status(400).json({message: "Please provide collection id found"});
+    }
+    const collection = await Collection.findOne({_id: collectionId});
+    if(!collection)
+    {
+        return res.status(400).json({message: "No collection with given id found"});
     }
     const papers = await ResearchPaper.find({collectionId});
     if(!papers || papers.length < 1)

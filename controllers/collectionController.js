@@ -80,6 +80,11 @@ const getUserCollections = async(req, res) => {
     {
         return res.status(400).json({message: "Please provide userId"});
     }
+    const user = await User.findOne({_id: userId});
+    if(!user)
+    {
+        return res.status(400).json({message: "No user with given Id found"});
+    }
     const userCollections = await Collection.find({user: userId});
     if(!userCollections || userCollections.length < 1)
     {

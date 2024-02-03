@@ -11,6 +11,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoute");
 const collectionRoutes = require("./routes/collectionRoute");
 const researchPaperRoutes = require("./routes/researchRoute");
+const commentRoutes = require("./routes/commentRoute");
 const corsOptions = require("./config/corsOptions");
 app.use(logger);
 app.use(cors(corsOptions));
@@ -20,13 +21,14 @@ app.use(cookieParser());
 app.use("/", express.static(path.join(__dirname, "/public")));
 app.use("/files", express.static(path.join(__dirname, "/files")));
 app.use("/", require("./routes/root"));
-
 // auth routes
 app.use("/auth", authRoutes);
 //collection routes
 app.use("/collections", collectionRoutes);
 //research papers routes
 app.use("/researchPapers", researchPaperRoutes);
+// comment routes
+app.use("/comments", commentRoutes);
 app.all("*", (req, res)=>{
     res.status(404);
     if(req.accepts("html"))
