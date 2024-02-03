@@ -1,6 +1,15 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+const getUsers = async(req, res) => {
+    const users = await User.find({});
+    if(!users || users.length < 1)
+    {
+        return res.status(400).json({message: "No users found"});
+    }
+    return res.status(200).json({users, total: users.length});
+}
 const createNewUser = async(req, res) => {
     const {name, email, password} = req.body;
     if(!name || !email || !password)
@@ -53,4 +62,4 @@ const loginUser = async (req, res) => {
     return res.status(200).json({message: "User logged in Successfully", user: userExist, accessToken});
 }
 
-module.exports = {createNewUser, loginUser};
+module.exports = {createNewUser, loginUser, getUsers};

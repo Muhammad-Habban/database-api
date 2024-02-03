@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {getResearchPapers, createResearchPaper, deleteResearchPaper, updateResearchPaper, getCollectionResearchPaper} = require("../controllers/researchPaperController");
 const multer = require("multer");
+const verifyJwt = require("../middleware/verifyJwt");
+router.use(verifyJwt);
 const fileStorageEngine = multer.diskStorage(
     {
         destination: (req, file, cb) => {
